@@ -179,7 +179,7 @@ sub _invoke {
 
     try {
         my $instance = $controller->new(request => $request, path_params => $path_params);
-        $response = $instance->run;
+        $response    = $instance->run;
     } catch {
         warn "Error handling request to $route_path: $_";
         return [
@@ -187,7 +187,7 @@ sub _invoke {
             ["Content-Type" => "application/json"],
             [encode_json({errors => [{500 => "Internal Server Error"}]})]
         ];
-    }
+    };
 
     return $response;
 }
