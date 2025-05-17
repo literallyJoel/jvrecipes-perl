@@ -66,7 +66,7 @@ sub handle {
         my ($route_method, $route_path, $controller) = @$route;
         
         die "$controller is not a valid controller instance"
-            unless $controller->can("new") && $controller->can("use");
+            unless $controller->can("new") && $controller->can("run");
 
         next unless $route_method eq $method || $route_method eq "ANY";
 
