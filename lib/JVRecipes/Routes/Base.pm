@@ -1,7 +1,6 @@
 package JVRecipes::Routes::Base;
 
 use Mouse;
-
 with "JVRecipes::Role::Router";
 
 sub BUILD {

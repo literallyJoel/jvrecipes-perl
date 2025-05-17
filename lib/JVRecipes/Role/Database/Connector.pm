@@ -1,6 +1,6 @@
 package JVRecipes::Role::Database::Connector;
 
-use Mouse;
+use Mouse::Role;
 
 use JVRecipes::Database::Database;
 
