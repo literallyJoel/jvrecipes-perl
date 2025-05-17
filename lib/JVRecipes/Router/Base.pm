@@ -18,6 +18,8 @@ sub group {
 
     my $router = $module->new(prefix => $self->prefix . $prefix);
 
+    push $self->routes->@*, $router->_router->routes-@*;
+
     return $self;
 }
 
@@ -48,7 +50,6 @@ sub handle {
     my $self = shift;
     my $env  = shift;
     
-
     my $request = Plack::Request->new($env);
     my $path    = $request->path_info;
     my $method  = $request->method;
@@ -56,16 +57,25 @@ sub handle {
     for my $route ($self->routes->@*) {
         my ($route_method, $route_path, $controller) = @$route;
 
+        warn Dumper {
+            me => $method,
+            rm => $route_method,
+        };
         next unless $route_method eq $method || $route_method eq "ANY";
 
-        return $controller->new(request => $request, path_params => [])->run()
+        warn Dumper {
+            rp => $route_path,
+            p  => $path
+        };
+
+        return $controller->new(request => $request, path_params => {})->run()
             if $route_path eq $path;
         
         if ($route_path =~ /\*$/) {
             my $prefix = $route_path;
             $prefix =~ s/\*$//;
 
-            return $controller->new(request => $request, path_params => [])->run()
+            return $controller->new(request => $request, path_params => {})->run()
                 if $path =~ /^$prefix/;
         }
 
@@ -91,13 +101,14 @@ sub handle {
             return $controller->new(request => $request, path_params => \%params)->run()
                 if $matches;
         }
-
-        return [
-            404,
-            ["Content-Type" => "application/json"],
-            [encode_json({errors => [{404 => "Not Found"}]})] 
-        ];
     }
+
+    # If no route matches, return a 404 response
+    return [
+        404,
+        ["Content-Type" => "application/json"],
+        [encode_json({error => "Not Found"})]
+    ];
 }
 
 
