@@ -103,7 +103,7 @@ sub find_route {
         return wantarray ? (undef, $params, $has_methods) : undef if $has_methods;
     }
 
-    for my $child_key (keys $self->children->%*) {
+    for my $child_key (sort keys $self->children->%*) {
         my $child = $self->children->{$child_key};
 
         if($child_key =~ /^:/) {
