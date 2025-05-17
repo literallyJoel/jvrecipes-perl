@@ -1,7 +1,7 @@
 package JVRecipes::Router::Node;
 
 use Mouse;
-use Carp qw(cluck);
+use Carp qw(croak);
 
 has "segment"    => ( is => "ro", isa => "Str", default => "" );
 has "children"   => ( is => "ro", isa => "HashRef", default => sub{ {} } );
@@ -23,6 +23,8 @@ sub add_route {
     my $segment = shift @$path_segments;
 
     if($segment eq "*") {
+        croak "Wildcard must be final segment" if @$path_segments;
+
         $self->wildcard(JVRecipes::Router::Node->new(segment => "*"))
             unless $self->wildcard;
         
@@ -62,6 +64,9 @@ sub _add_handler {
     my $method     = shift;
     my $controller = shift;
 
+    croak "Duplicate route for $method on " . $self->segment
+        if exists $self->handlers->{$method};
+
     $self->handlers->{$method} = $controller;
 }
 
@@ -71,7 +76,7 @@ sub find_route {
 
     my $method        = $args{method};
     my $path_segments = $args{path_segments};
-    my $params        = $args{params};
+    my $params        = $args{params} // {};
 
     unless (@$path_segments) {
         my $handler = $self->handlers->{$method} || $self->handlers->{"ANY"};

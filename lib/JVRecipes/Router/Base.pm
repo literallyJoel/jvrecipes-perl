@@ -70,7 +70,7 @@ sub handle {
 
     return [
         $response_code,
-        ["Content-Type", "application/json"],
+        ["Content-Type" => "application/json"],
         [encode_json({errors => [{$response_code => $error_message}]})],
     ];
 }
@@ -177,14 +177,11 @@ sub _invoke {
 
     my $response;
 
-    eval {
+    try {
         my $instance = $controller->new(request => $request, path_params => $path_params);
         $response = $instance->run;
-    };
-
-    if($@) {
-        warn "Error handling request to $route_path: $@";
-
+    } catch {
+        warn "Error handling request to $route_path: $_";
         return [
             500,
             ["Content-Type" => "application/json"],
