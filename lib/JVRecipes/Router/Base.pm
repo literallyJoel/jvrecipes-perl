@@ -91,7 +91,7 @@ sub handle {
                 controller => $controller,
                 request    => $request,
                 route_path => $route_path
-            ) if $path =~ /^prefix/;
+            ) if $path =~ /^$prefix/;
         }
 
         if ($route_path =~ /:/) {
@@ -122,11 +122,13 @@ sub handle {
         }
     }
 
-    # If no route matches, return a 404 response
+    my $response_code = $wrong_method ? 405 : 404;
+    my $error_message = $wrong_method ? "Method not allowed" : "Not Found";
+
     return [
-        404,
+        $response_code,
         ["Content-Type" => "application/json"],
-        [encode_json({error => "Not Found"})]
+        [encode_json({errors => [{$response_code => $error_message}]})]
     ];
 }
 
@@ -150,7 +152,7 @@ sub _invoke {
 
         return [
             500,
-            ["Content-Type", "application/json"],
+            ["Content-Type" => "application/json"],
             [encode_json({errors => [500 => "Internal Server Error"]})]
         ];
     }
