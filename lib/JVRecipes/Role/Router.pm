@@ -16,6 +16,7 @@ sub get    {shift->_router->get(@_)}
 sub post   {shift->_router->post(@_)}
 sub put    {shift->_router->put(@_)}
 sub delete {shift->_router->delete(@_)}
+sub patch  {shift->_router->patch(@_)}
 sub any    {shift->_router->any(@_)}
 sub handle {shift->_router->handle(@_)}
 

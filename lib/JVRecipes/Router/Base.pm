@@ -27,7 +27,7 @@ sub group {
     die "$router is not a valid router instance"
         unless $router->can("_router");
     
-    for my $method (qw(GET POST PUT DELETE ANY)) {
+    for my $method (qw(GET POST PUT DELETE ANY PATCH)) {
         $self->_child_route($router->_router, $method);
     }
 
@@ -39,6 +39,7 @@ sub post   {shift->_add_route("POST", @_)}
 sub put    {shift->_add_route("PUT", @_)}
 sub delete {shift->_add_route("DELETE", @_)}
 sub any    {shift->_add_route("ANY", @_)}
+sub patch  {shift->_add_route("PATCH", @_)}
 
 sub handle {
     my $self = shift;
