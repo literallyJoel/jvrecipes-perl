@@ -20,8 +20,8 @@ sub group {
     
     my $router = $module->new(prefix => $self->prefix . $prefix);
 
-    die "$module is not a valid router instance"
-         unless $module->has("_router");
+    die "$router is not a valid router instance"
+         unless $router->has("_router");
 
     push $self->routes->@*, $router->_router->routes->@*;
 
