@@ -15,8 +15,13 @@ sub group {
     my $module = shift;
 
     load $module;
-
+    die "$module is not a valid router instance"
+        unless $module->can("new");
+    
     my $router = $module->new(prefix => $self->prefix . $prefix);
+
+    die "$module is not a valid router instance"
+         unless $module->has("_router");
 
     push $self->routes->@*, $router->_router->routes->@*;
 
@@ -37,6 +42,9 @@ sub _add_route {
 
     load $controller;
 
+    die "$controller is not a valid controller instance"
+        unless $controller->can("new") && $controller->can("run");
+
     push $self->routes->@*, [
         $method,
         $self->prefix . $path,
@@ -56,6 +64,9 @@ sub handle {
 
     for my $route ($self->routes->@*) {
         my ($route_method, $route_path, $controller) = @$route;
+        
+        die "$controller is not a valid controller instance"
+            unless $controller->can("new") && $controller->can("use");
 
         next unless $route_method eq $method || $route_method eq "ANY";
 
