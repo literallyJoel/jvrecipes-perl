@@ -62,23 +62,36 @@ sub handle {
     my $path    = $request->path_info;
     my $method  = $request->method;
 
+    my $wrong_method = 0;
+    
     for my $route ($self->routes->@*) {
         my ($route_method, $route_path, $controller) = @$route;
         
         die "$controller is not a valid controller instance"
             unless $controller->can("new") && $controller->can("run");
 
-        next unless $route_method eq $method || $route_method eq "ANY";
+        if($route_path eq $path && $route_method ne $method && $route_method ne "ANY") {
+            $wrong_method = 1;
+            next;
+        }
 
-        return $controller->new(request => $request, path_params => {})->run()
-            if $route_path eq $path;
+        next unless $route_method eq $method || $route_method eq "ANY";
+        
+        return $self->_invoke(
+            controller => $controller,
+            request    => $request,
+            route_path => $route_path
+        ) if $route_path eq $path;
         
         if ($route_path =~ /\*$/) {
             my $prefix = $route_path;
             $prefix =~ s/\*$//;
 
-            return $controller->new(request => $request, path_params => {})->run()
-                if $path =~ /^$prefix/;
+            return $self->_invoke(
+                controller => $controller,
+                request    => $request,
+                route_path => $route_path
+            ) if $path =~ /^prefix/;
         }
 
         if ($route_path =~ /:/) {
@@ -100,8 +113,12 @@ sub handle {
                 }
             }
 
-            return $controller->new(request => $request, path_params => \%params)->run()
-                if $matches;
+            return $self->_invoke(
+                controller  => $controller,
+                request     => $request,
+                path_params => \%params,
+                route_path  => $route_path,
+            ) if $matches;
         }
     }
 
@@ -113,6 +130,33 @@ sub handle {
     ];
 }
 
+sub _invoke {
+    my $self        = shift;
+    my %args        = @_;
+    my $controller  = $args{controller};
+    my $request     = $args{request};
+    my $path_params = $args{path_params} || {};
+    my $route_path  = $args{route_path};
+
+    my $response;
+
+    eval {
+        my $instance = $controller->new(request => $request, path_params => $path_params);
+        $response = $instance->run;
+    };
+   
+    if($@) {
+        warn "Error handling request to $route_path: $@";
+
+        return [
+            500,
+            ["Content-Type", "application/json"],
+            [encode_json({errors => [500 => "Internal Server Error"]})]
+        ];
+    }
+
+    return $response;
+}
 
 sub clear_routes {
     my $self = shift;
