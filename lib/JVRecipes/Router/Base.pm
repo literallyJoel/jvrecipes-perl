@@ -21,7 +21,7 @@ sub group {
     my $router = $module->new(prefix => $self->prefix . $prefix);
 
     die "$router is not a valid router instance"
-         unless $router->has("_router");
+         unless $router->can("_router");
 
     push $self->routes->@*, $router->_router->routes->@*;
 
