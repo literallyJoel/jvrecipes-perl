@@ -21,12 +21,12 @@ sub group {
 
     die "$module is not a valid router instance"
         unless $module->can("new");
-    
+
     my $router = $module->new(prefix => $self->prefix . $prefix);
 
     die "$router is not a valid router instance"
         unless $router->can("_router");
-    
+
     for my $method (qw(GET POST PUT DELETE ANY PATCH)) {
         $self->_child_route($router->_router, $method);
     }
@@ -58,7 +58,7 @@ sub handle {
             method        => $method,
             path_segments => \@segments,
         );
-    
+
     return $self->_invoke(
         controller  => $controller,
         request     => $request,
@@ -122,7 +122,7 @@ sub _find_route {
                 my $controller = $node->wildcard->handlers->{$method};
                 $self->_add_route_to_tree(
                     method     => $method,
-                    path       => $new_prefix, 
+                    path       => $new_prefix,
                     controller => $controller
                 );
             }
@@ -138,9 +138,9 @@ sub _add_route {
     load $controller;
     die "$controller is not a valid controller instance"
         unless $controller->can("new") && $controller->can("run");
-    
+
     $self->_add_route_to_tree(
-        method     => $method, 
+        method     => $method,
         path       => $self->prefix . $path,
         controller => $controller
     );

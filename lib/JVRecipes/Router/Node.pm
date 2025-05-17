@@ -19,7 +19,7 @@ sub add_route {
 
     return $self->_add_handler($method, $controller)
         unless @$path_segments;
-    
+
     my $segment = shift @$path_segments;
 
     if($segment eq "*") {
@@ -27,7 +27,7 @@ sub add_route {
 
         $self->wildcard(JVRecipes::Router::Node->new(segment => "*"))
             unless $self->wildcard;
-        
+
         $self->wildcard->_add_handler($method, $controller);
         return;
     }
@@ -84,7 +84,7 @@ sub find_route {
 
         return wantarray ? (undef, $params, scalar(keys %{$self->handlers})) : undef 
             if keys %{$self->handlers};
-        
+
         return wantarray ? (undef, $params, 0) : undef;
     }
 
@@ -98,7 +98,7 @@ sub find_route {
                 path_segments => \@remaining,
                 params => $params,
             );
-        
+
         return wantarray ? ($handler, $match_params, $has_methods) : $handler if $handler;
         return wantarray ? (undef, $params, $has_methods) : undef if $has_methods;
     }
@@ -116,17 +116,17 @@ sub find_route {
                     path_segments => \@remaining,
                     params        => \%new_params
                 );
-            
+
             return wantarray ? ($handler, $match_params, $has_methods) : $handler if $handler;
             return wantarray ? (undef, $params, $has_methods) : undef if $has_methods;
         }
     }
 
-    return wantarray 
+    return wantarray
       ? ($self->wildcard->handlers->{$method} || $self->wildcard->handlers->{"ANY"}, $params, scalar keys $self->wildcard->handlers->%*)
       : $self->wildcard->handlers->{$method} || $self->wildcard->handlers->{"ANY"}
       if $self->wildcard;
-    
+
     return wantarray ? (undef, $params, 0) : undef;
 }
 

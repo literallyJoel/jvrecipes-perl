@@ -45,7 +45,7 @@ subtest "Add param routes" => sub {
         $node->add_route(method => $op, path_segments => [":param"], controller => $op."Controller");
         is($node->children->{":param"}->handlers->{$op}, $op."Controller", "Param handler correctly added for $op");
     }
-    
+
     is($node->children->{":param"}->param_name, "param", "Param name set correctly");
 };
 
@@ -78,7 +78,7 @@ subtest "Find basic routes" => sub {
 
 subtest "Find child routes" => sub {
     my $node = JVRecipes::Router::Node->new;
-    
+
     my ($controller) = $node->find_route(method => "GET", path_segments => ["seg"]);
     ok(!$controller, "undef returned on not found");
 
@@ -112,9 +112,9 @@ subtest "Find ANY route" => sub {
   }
 };
 
-subtest "Find parameter rounds" => sub {
+subtest "Find parameter routes" => sub {
     my $node = JVRecipes::Router::Node->new;
-    
+
     for my $op (qw(POST GET PATCH PUT DELETE)) {
         $node->add_route(method => $op, path_segments => [":param1", ":param2"], controller => $op."Controller");
         my ($controller, $params) = $node->find_route(method => $op, path_segments => ["returned", "value"]);
@@ -125,7 +125,7 @@ subtest "Find parameter rounds" => sub {
     }
 };
 
-subtest "Widlcard Validation" => sub {
+subtest "Wildcard Validation" => sub {
 
     my $node = JVRecipes::Router::Node->new;
 
@@ -151,7 +151,7 @@ subtest "Duplicate Validation" => sub {
 
   try {
     $node->add_route(method => "GET", path_segments => [], controller => "Controller");
-    $died = 0
+    $died = 0;
   };
   ok(!$died, "Doesn't die if not duplicate");
 
