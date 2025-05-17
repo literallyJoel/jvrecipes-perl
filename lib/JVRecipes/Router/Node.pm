@@ -123,7 +123,7 @@ sub find_route {
     }
 
     return wantarray 
-      ? ($self->wildcard->handlers->{$method} || $self->wildcard->handlers->{"ANY"}, $params)
+      ? ($self->wildcard->handlers->{$method} || $self->wildcard->handlers->{"ANY"}, $params, scalar keys $self->wildcard->handlers->%*)
       : $self->wildcard->handlers->{$method} || $self->wildcard->handlers->{"ANY"}
       if $self->wildcard;
     
