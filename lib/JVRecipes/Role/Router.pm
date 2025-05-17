@@ -4,10 +4,11 @@ use Mouse::Role;
 use JVRecipes::Router::Base;
 
 has '_router' => ( is => 'ro', isa => 'JVRecipes::Router::Base', lazy_build => 1 );
-
+has 'prefix'  => ( is => 'ro', isa => 'Str', default => '');
 
 sub _build__router {
-    return JVRecipes::Router::Base->new;
+    my $self = shift;
+    return JVRecipes::Router::Base->new(prefix => $self->prefix);
 }
 
 sub group  {shift->_router->group(@_)}

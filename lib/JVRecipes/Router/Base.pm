@@ -18,7 +18,7 @@ sub group {
 
     my $router = $module->new(prefix => $self->prefix . $prefix);
 
-    push $self->routes->@*, $router->_router->routes-@*;
+    push $self->routes->@*, $router->_router->routes->@*;
 
     return $self;
 }
@@ -57,16 +57,7 @@ sub handle {
     for my $route ($self->routes->@*) {
         my ($route_method, $route_path, $controller) = @$route;
 
-        warn Dumper {
-            me => $method,
-            rm => $route_method,
-        };
         next unless $route_method eq $method || $route_method eq "ANY";
-
-        warn Dumper {
-            rp => $route_path,
-            p  => $path
-        };
 
         return $controller->new(request => $request, path_params => {})->run()
             if $route_path eq $path;
