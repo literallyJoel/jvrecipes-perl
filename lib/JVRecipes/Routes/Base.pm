@@ -8,7 +8,7 @@ sub BUILD {
     my $self = shift;
 
     $self->group("/api", "JVRecipes::Routes::API::Base");
-    $self->group("/", "JVRecipes::Routes::Frontend");
+    $self->group("/", "JVRecipes::Routes::Static");
 }
 
 1;

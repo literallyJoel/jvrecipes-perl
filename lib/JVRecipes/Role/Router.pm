@@ -18,7 +18,6 @@ sub group {
 
     load $module;
 
-    # Create a new router instance with the combined prefix
     my $router = $module->new(prefix => $self->prefix . $prefix);
 
     return $self;
@@ -81,13 +80,11 @@ sub _add_route {
     my $controller = shift;
 
     load $controller;
-
-    my $controller_instance = $controller->new();
-
+    
     push @$ROUTES, [
         $method, 
         $self->prefix . $path, 
-        sub {$controller_instance->run(@_)}
+        $controller,
     ];
 }
 
@@ -100,21 +97,31 @@ sub handle {
     my $method  = $request->method;
 
     for my $route (@$ROUTES) {
-        my ($route_method, $route_path, $handler) = @$route;
+        my ($route_method, $route_path, $controller_class) = @$route;
 
         next unless $route_method eq $method || $route_method eq "ANY";
 
-        return $handler->($request, {}) if $route_path eq $path;
+        if ($route_path eq $path) {
+            my $controller = $controller_class->new(
+                request => $request,
+                path_params => {}
+            );
+            return $controller->run();
+        }
 
-        # Wildcards
         if ($route_path =~ /\*$/) {
             my $prefix = $route_path;
             $prefix =~ s/\*$//;
 
-            return $handler->($request, {}) if $path =~ /^$prefix/;
+            if ($path =~ /^$prefix/) {
+                my $controller = $controller_class->new(
+                    request => $request,
+                    path_params => {}
+                );
+                return $controller->run();
+            }
         }
 
-        # Params
         if ($route_path =~ /:/) {
             my @route_segments = split "/", $route_path;
             my @path_segments  = split "/", $path;
@@ -133,11 +140,16 @@ sub handle {
                 }
             }
 
-            return $handler->($request, \%params) if $matches;
+            if ($matches) {
+                my $controller = $controller_class->new(
+                    request => $request,
+                    path_params => \%params
+                );
+                return $controller->run();
+            }
         }
     }
 
-    # No route found
     return [
         404,
         ['Content-Type' => 'application/json'],

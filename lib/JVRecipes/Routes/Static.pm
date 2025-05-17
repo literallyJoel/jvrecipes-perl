@@ -1,4 +1,4 @@
-package JVRecipes::Routes::Frontend;
+package JVRecipes::Routes::Static;
 
 use Mouse;
 use Path::Tiny;
@@ -9,7 +9,7 @@ with "JVRecipes::Role::Router";
 sub BUILD {
     my $self = shift;
 
-    $self->get("*", "JVRecipes::Endpoint::Frontend");
+    $self->get("*", "JVRecipes::Endpoint::Static");
 }
 
 1;

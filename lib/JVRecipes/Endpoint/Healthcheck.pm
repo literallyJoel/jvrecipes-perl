@@ -6,7 +6,7 @@ with "JVRecipes::Role::Endpoint::Base";
 sub run {
     my $self = shift;
 
-    $self->send_response(content => "OK");
+    return $self->send_response(content => {message => "OK from Healthcheck"});
 }
 
 1;

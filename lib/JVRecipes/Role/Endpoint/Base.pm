@@ -8,12 +8,14 @@ use Try::Tiny;
 has body         => (is => "ro", lazy_build => 1);
 has query_params => (is => "ro", isa => "HashRef", lazy_build => 1);
 has path_params  => (is => "ro", isa => "HashRef", lazy_build => 1);
-has validate     => (is => "ro", default => sub{return {valid => 1}});
-has path         => (is => "ro", isa => "string", lazy_build => 1);
+has request_path => (is => "ro", isa => "Str", lazy_build => 1);
 has request      => (is => "ro", lazy_build => 1);
 
 sub _build_body {
-    my $self    = shift;
+    my $self = shift;
+
+    # Guard against undefined request
+    return {} unless $self->request;
 
     my $content = $self->request->content;
 
@@ -21,7 +23,6 @@ sub _build_body {
 
     try {
         my $decoded = decode_json($content);
-
         return $decoded;
     } catch {
         return {};
@@ -30,41 +31,53 @@ sub _build_body {
 
 sub _build_query_params {
     my $self = shift;
-
+    
+    return {} unless $self->request;
+    
     return $self->request->query_parameters->as_hashref;
 }
 
 sub _build_path_params {
-    my $self    = shift;
-    my $request = shift;
-    my $params  = shift;
+    my $self = shift;
 
-    return $params || {};
+    return $self->{path_params} || {};
 }
 
-sub _build_path {
+sub _build_request_path {
     my $self = shift;
+
+    return "/" unless $self->request;
+    
     return $self->request->path_info || "/";
 }
 
-sub _build_request {
-    my $self    = shift;
-    my $request = shift;
+sub BUILD {
+    my ($self, $args) = @_;
 
-    return $request;
+    if (defined $args->{request}) {
+        $self->{request} = $args->{request};
+    }
+
+    if (defined $args->{path_params}) {
+        $self->{path_params} = $args->{path_params};
+    }
 }
 
-around "run" => sub {
+
+around run => sub {
     my $run  = shift;
     my $self = shift;
+    my @args = @_;
 
-    my ($valid, $errors) = validate(
+    return $self->$run(@args) unless $self->can("validate");
+
+    my ($valid, $errors) = $self->validate(
         body         => $self->body,
         query_params => $self->query_params,
         path_params  => $self->path_params,
     );
 
-    return $run(@_) if $valid;
+    return $self->$run(@args) if $valid;
 
     $self->bad_request($errors);
 };
@@ -76,6 +89,9 @@ sub send_response {
     my $status_code = $args{status_code} || 200;
     my $content     = $args{content};
 
+    use Data::Dumper;
+    warn Dumper $status_code;
+    warn Dumper {content => $content};
     return [
         $status_code,
         ["Content-Type", "application/json"],
@@ -93,12 +109,12 @@ sub not_found {
 
 sub bad_request {
     my $self = shift;
-    my $errors = shift;
+    my %errors = @_;
 
     return [
         400,
         ["Content-Type", "application/json"],
-        [encode_json({errors => $errors})],
+        [encode_json({errors => \%errors})],
     ];
 }
 
