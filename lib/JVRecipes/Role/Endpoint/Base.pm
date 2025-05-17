@@ -31,9 +31,9 @@ sub _build_body {
 
 sub _build_query_params {
     my $self = shift;
-    
+
     return {} unless $self->request;
-    
+
     return $self->request->query_parameters->as_hashref;
 }
 
@@ -47,7 +47,7 @@ sub _build_request_path {
     my $self = shift;
 
     return "/" unless $self->request;
-    
+
     return $self->request->path_info || "/";
 }
 
@@ -120,7 +120,7 @@ sub unauthorized {
         401,
         ["Content-Type", "application/json"],
         [encode_json({error => "Unauthorized"})]
-    ]    
+    ];
 }
 
 1;
