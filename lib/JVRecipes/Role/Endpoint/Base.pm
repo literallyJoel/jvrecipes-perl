@@ -89,9 +89,6 @@ sub send_response {
     my $status_code = $args{status_code} || 200;
     my $content     = $args{content};
 
-    use Data::Dumper;
-    warn Dumper $status_code;
-    warn Dumper {content => $content};
     return [
         $status_code,
         ["Content-Type", "application/json"],

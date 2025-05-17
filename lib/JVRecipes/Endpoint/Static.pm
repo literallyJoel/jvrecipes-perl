@@ -13,8 +13,6 @@ sub run {
 
     if ($self->request_path =~ m{^/assets/(.+)}) {
         my $asset_path = $1;
-        use Data::Dumper;
-        warn Dumper $asset_path;
 
         my $file_path = $base_dir->child("assets", $asset_path);
 
