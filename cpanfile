@@ -21,4 +21,5 @@ requires 'aliased';
 on 'develop' => sub {
     requires 'Carton';
     requires 'Plack::App::Directory';
+    requires 'Plack::Loader::Restarter';
 };
