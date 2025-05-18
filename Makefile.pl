@@ -9,7 +9,7 @@ WriteMakefile(
     VERSION_FROM     => 'lib/JVRecipes/Routes/Base.pm',
     ABSTRACT         => 'JVRecipes Application',
     LICENSE          => 'mit',
-    MIN_PERL_VERSION => '5.010',
+    MIN_PERL_VERSION => '5.020',
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => '0',
     },
