@@ -17,13 +17,11 @@ sub generate {
 
     my $query = $self->schema->query;
 
-    return "Query is undefined" unless $query;
-
     try {
         $self->dbh->do($query);
     } catch {
         return $_;
-    }
+    };
 
     return 0;
 }

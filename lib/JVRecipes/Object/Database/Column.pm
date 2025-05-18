@@ -16,7 +16,7 @@ sub _build_query {
     my $self = shift;
 
     my $query = $self->name . " " . $self->type;
-    $query .= $self->nullable    ? ""                                     : "NOT NULL";
+    $query .= $self->nullable    ? ""                                     : " NOT NULL";
     $query .= $self->default     ? " DEFAULT ". $self->default            : "";
     $query .= $self->constraints ? " " . join " ", $self->constraints->@* : "";
 
