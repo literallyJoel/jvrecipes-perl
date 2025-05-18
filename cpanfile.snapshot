@@ -60,6 +60,36 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
+  CPAN-Meta-Requirements-2.143
+    pathname: R/RJ/RJBS/CPAN-Meta-Requirements-2.143.tar.gz
+    provides:
+      CPAN::Meta::Requirements 2.143
+      CPAN::Meta::Requirements::Range 2.143
+    requirements:
+      B 0
+      Carp 0
+      ExtUtils::MakeMaker 6.17
+      perl 5.010000
+      strict 0
+      version 0.88
+      warnings 0
+  CPAN-Requirements-Dynamic-0.002
+    pathname: L/LE/LEONT/CPAN-Requirements-Dynamic-0.002.tar.gz
+    provides:
+      CPAN::Requirements::Dynamic 0.002
+    requirements:
+      CPAN::Meta::Prereqs 0
+      CPAN::Meta::Requirements::Range 0
+      Carp 0
+      ExtUtils::Config 0
+      ExtUtils::HasCompiler 0
+      ExtUtils::MakeMaker 0
+      IPC::Cmd 0
+      Parse::CPAN::Meta 0
+      Perl::OSType 0
+      perl 5.006
+      strict 0
+      warnings 0
   Capture-Tiny-0.50
     pathname: D/DA/DAGOLDEN/Capture-Tiny-0.50.tar.gz
     provides:
@@ -166,6 +196,21 @@ DISTRIBUTIONS
       Pod::Text 2.08
       XSLoader 0
       overload 0
+      strict 0
+      warnings 0
+  Crypt-Argon2-0.030
+    pathname: L/LE/LEONT/Crypt-Argon2-0.030.tar.gz
+    provides:
+      Crypt::Argon2 0.030
+    requirements:
+      Dist::Build 0.020
+      Dist::Build::Core 0
+      Dist::Build::XS 0
+      Dist::Build::XS::Conf 0
+      Exporter 5.57
+      Time::HiRes 0
+      XSLoader 0
+      perl 5.006
       strict 0
       warnings 0
   DBI-1.647
@@ -313,6 +358,57 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       Test::More 0
       perl 5.004
+  Dist-Build-0.020
+    pathname: L/LE/LEONT/Dist-Build-0.020.tar.gz
+    provides:
+      Dist::Build 0.020
+      Dist::Build::Core 0.020
+      Dist::Build::DynamicPrereqs 0.020
+      Dist::Build::Serializer 0.020
+      Dist::Build::ShareDir 0.020
+      Dist::Build::XS 0.020
+      Dist::Build::XS::Alien 0.020
+      Dist::Build::XS::Conf 0.020
+      Dist::Build::XS::Export 0.020
+      Dist::Build::XS::Import 0.020
+      Dist::Build::XS::WriteConstants 0.020
+    requirements:
+      CPAN::Meta 0
+      CPAN::Meta::Merge 0
+      CPAN::Requirements::Dynamic 0.002
+      Carp 0
+      Exporter 5.57
+      ExtUtils::Builder::Action::Function 0
+      ExtUtils::Builder::Compiler 0.028
+      ExtUtils::Builder::Node 0
+      ExtUtils::Builder::ParseXS 0
+      ExtUtils::Builder::Planner 0.016
+      ExtUtils::Builder::Planner::Extension 0
+      ExtUtils::Builder::Serializer 0
+      ExtUtils::Builder::Util 0
+      ExtUtils::Config 0
+      ExtUtils::Helpers 0.028
+      ExtUtils::Install 0
+      ExtUtils::InstallPaths 0
+      ExtUtils::Manifest 0
+      File::Basename 0
+      File::Copy 0
+      File::Find 0
+      File::Path 0
+      File::ShareDir::Tiny 0
+      File::Spec::Functions 0
+      Getopt::Long 2.36
+      List::Util 1.33
+      Parse::CPAN::Meta 0
+      Perl::OSType 0
+      Pod::Man 0
+      TAP::Harness::Env 0
+      Text::ParseWords 0
+      parent 0
+      perl 5.010
+      strict 0
+      version 0
+      warnings 0
   Dotenv-0.002
     pathname: B/BO/BOOK/Dotenv-0.002.tar.gz
     provides:
@@ -336,6 +432,94 @@ DISTRIBUTIONS
       Encode::Alias 0
       ExtUtils::MakeMaker 0
       perl 5.008
+  ExtUtils-Builder-0.017
+    pathname: L/LE/LEONT/ExtUtils-Builder-0.017.tar.gz
+    provides:
+      ExtUtils::Builder 0.017
+      ExtUtils::Builder::Action 0.017
+      ExtUtils::Builder::Action::Code 0.017
+      ExtUtils::Builder::Action::Command 0.017
+      ExtUtils::Builder::Action::Composite 0.017
+      ExtUtils::Builder::Action::Function 0.017
+      ExtUtils::Builder::Action::Perl 0.017
+      ExtUtils::Builder::Action::Primitive 0.017
+      ExtUtils::Builder::FileSet 0.017
+      ExtUtils::Builder::FileSet::Filter 0.017
+      ExtUtils::Builder::FileSet::Free 0.017
+      ExtUtils::Builder::FileSet::Subst 0.017
+      ExtUtils::Builder::MakeMaker 0.017
+      ExtUtils::Builder::Node 0.017
+      ExtUtils::Builder::Plan 0.017
+      ExtUtils::Builder::Planner 0.017
+      ExtUtils::Builder::Planner::Extension 0.017
+      ExtUtils::Builder::Serializer 0.017
+      ExtUtils::Builder::Util 0.017
+    requirements:
+      Carp 0
+      Data::Dumper 0
+      Exporter 5.57
+      ExtUtils::Config 0
+      ExtUtils::Config::MakeMaker 0
+      ExtUtils::MakeMaker 6.68
+      ExtUtils::Manifest 0
+      File::Basename 0
+      File::Spec 0
+      File::Spec::Unix 0
+      List::Util 1.45
+      Perl::OSType 0
+      Scalar::Util 0
+      base 0
+      parent 0
+      perl 5.010
+      strict 0
+      version 0
+      warnings 0
+  ExtUtils-Builder-Compiler-0.032
+    pathname: L/LE/LEONT/ExtUtils-Builder-Compiler-0.032.tar.gz
+    provides:
+      ExtUtils::Builder::ArgumentCollector 0.032
+      ExtUtils::Builder::AutoDetect::C 0.032
+      ExtUtils::Builder::AutoDetect::Cpp 0.032
+      ExtUtils::Builder::Binary 0.032
+      ExtUtils::Builder::Compiler 0.032
+      ExtUtils::Builder::Compiler::MSVC 0.032
+      ExtUtils::Builder::Compiler::Unixy 0.032
+      ExtUtils::Builder::Compiler::VMS 0.032
+      ExtUtils::Builder::Conf 0.032
+      ExtUtils::Builder::Linker 0.032
+      ExtUtils::Builder::Linker::Ar 0.032
+      ExtUtils::Builder::Linker::COFF 0.032
+      ExtUtils::Builder::Linker::ELF::Any 0.032
+      ExtUtils::Builder::Linker::ELF::GCC 0.032
+      ExtUtils::Builder::Linker::Mach::GCC 0.032
+      ExtUtils::Builder::Linker::PE::GCC 0.032
+      ExtUtils::Builder::Linker::PE::MSVC 0.032
+      ExtUtils::Builder::Linker::Unixy 0.032
+      ExtUtils::Builder::Linker::XCOFF 0.032
+      ExtUtils::Builder::MultiLingual 0.032
+      ExtUtils::Builder::ParseXS 0.032
+      ExtUtils::Builder::Profile::Perl 0.032
+    requirements:
+      Carp 0
+      DynaLoader 0
+      ExtUtils::Builder 0.016
+      ExtUtils::Builder::Action::Command 0
+      ExtUtils::Builder::Node 0
+      ExtUtils::Builder::Planner 0.007
+      ExtUtils::Builder::Planner::Extension 0
+      ExtUtils::Builder::Util 0
+      ExtUtils::Config 0.007
+      ExtUtils::Helpers 0.027
+      ExtUtils::MakeMaker 0
+      File::Basename 0
+      File::Spec::Functions 0
+      File::Temp 0
+      Perl::OSType 0
+      parent 0
+      perl 5.010
+      sort 0
+      strict 0
+      warnings 0
   ExtUtils-Config-0.010
     pathname: L/LE/LEONT/ExtUtils-Config-0.010.tar.gz
     provides:
@@ -345,6 +529,23 @@ DISTRIBUTIONS
       Data::Dumper 0
       ExtUtils::MakeMaker 0
       ExtUtils::MakeMaker::Config 0
+      perl 5.006
+      strict 0
+      warnings 0
+  ExtUtils-HasCompiler-0.025
+    pathname: L/LE/LEONT/ExtUtils-HasCompiler-0.025.tar.gz
+    provides:
+      ExtUtils::HasCompiler 0.025
+    requirements:
+      Carp 0
+      DynaLoader 0
+      Exporter 0
+      ExtUtils::MakeMaker 0
+      ExtUtils::Mksymlists 0
+      File::Basename 0
+      File::Spec::Functions 0
+      File::Temp 0
+      base 0
       perl 5.006
       strict 0
       warnings 0
@@ -411,6 +612,18 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       File::Spec 0
       IO::Dir 0
+      perl 5.006
+      strict 0
+      warnings 0
+  File-ShareDir-Tiny-0.001
+    pathname: L/LE/LEONT/File-ShareDir-Tiny-0.001.tar.gz
+    provides:
+      File::ShareDir::Tiny 0.001
+    requirements:
+      Carp 0
+      Exporter 5.57
+      ExtUtils::MakeMaker 0
+      File::Spec::Functions 0
       perl 5.006
       strict 0
       warnings 0
