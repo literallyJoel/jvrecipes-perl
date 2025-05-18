@@ -6,7 +6,7 @@ use DBI;
 use Dotenv;
 use URI::db;
 
-Dotenv->load(".env");
+Dotenv->load(".env") if -e ".env";
 
 has 'dbh' => (is => "ro", isa => "DBI::db", lazy_build => 1);
 

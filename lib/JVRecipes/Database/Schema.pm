@@ -8,6 +8,8 @@ use aliased "JVRecipes::Object::Database::Column" => "Column";
 use aliased "JVRecipes::Object::Database::Table"  => "Table";
 use aliased "JVRecipes::Object::Database::Schema" => "Schema";
 
+use Try::Tiny;
+
 has schema => ( is => "ro", isa => "JVRecipes::Object::Database::Schema", lazy_build => 1);
 
 sub generate {
@@ -15,9 +17,15 @@ sub generate {
 
     my $query = $self->schema->query;
 
-    return unless $query;
+    return "Query is undefined" unless $query;
 
-    $self->dbh->do($query);
+    try {
+        $self->dbh->do($query);
+    } catch {
+        return $_;
+    }
+
+    return 0;
 }
 
 sub _build_schema {

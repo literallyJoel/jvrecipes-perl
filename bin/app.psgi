@@ -16,7 +16,9 @@ my $app = sub {
 
 
 builder {
-    $schema->generate;
+    my $err = $schema->generate;
+
+    die if $err;
     enable "Plack::Middleware::ContentLength";
     enable "Plack::Middleware::CrossOrigin", origins => "*";
     $app;
