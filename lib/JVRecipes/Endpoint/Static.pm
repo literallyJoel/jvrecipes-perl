@@ -1,10 +1,10 @@
 package JVRecipes::Endpoint::Static;
 
 use Mouse;
+with "JVRecipes::Role::Endpoint::Base";
+
 use Path::Tiny qw(path);
 use Plack::MIME;
-
-with "JVRecipes::Role::Endpoint::Base";
 
 sub run {
     my $self = shift;

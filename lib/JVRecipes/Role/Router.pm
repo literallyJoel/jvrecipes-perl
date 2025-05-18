@@ -1,6 +1,7 @@
 package JVRecipes::Role::Router;
 
 use Mouse::Role;
+
 use JVRecipes::Router::Base;
 
 has '_router' => ( is => 'ro', isa => 'JVRecipes::Router::Base', lazy_build => 1 );

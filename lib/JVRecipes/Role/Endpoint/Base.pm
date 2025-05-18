@@ -1,6 +1,7 @@
 package JVRecipes::Role::Endpoint::Base;
 
 use Mouse::Role;
+
 use JSON::MaybeXS;
 use HTTP::Status qw(:constants);
 use Try::Tiny;

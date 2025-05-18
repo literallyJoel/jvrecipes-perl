@@ -1,6 +1,7 @@
 package JVRecipes::Router::Base;
 
 use Mouse;
+
 use JSON::MaybeXS;
 use Try::Tiny;
 use Plack::Request;
