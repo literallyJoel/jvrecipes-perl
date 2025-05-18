@@ -4,7 +4,6 @@ use Mouse::Role;
 
 use JVRecipes::Database::Database;
 
-
 has 'database' => ( is => "ro", isa => "JVRecipes::Database::Database", lazy_build => 1);
 has 'dbh'      => ( is => "ro", isa => "DBI::db", lazy_build => 1);
 

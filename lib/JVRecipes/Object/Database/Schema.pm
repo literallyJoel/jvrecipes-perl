@@ -12,11 +12,7 @@ has "query"   => ( is => "ro", isa => "Str", lazy_build => 1) ;
 sub _build_query {
     my $self = shift;
 
-    my @queries;
-
-    for my $table ($self->tables->@*) {
-        push @queries, $table->query;
-    }
+    my @queries = map { $_->query } $self->tables->@*;
 
     return join "\n\n", @queries;
 }

@@ -13,15 +13,11 @@ has query       => ( is => "ro", isa => "Str", lazy_build => 1);
 sub _build_query {
     my $self = shift;
 
-    my @column_defintions;
+    my @column_definitions = map { $_->query} $self->columns->@*;
 
-    for my $column ($self->columns->@*) {
-        push @column_defintions, $column->query;
-    }
+    push @column_definitions, $self->constraints->@* if $self->constraints;
 
-    push @column_defintions, $self->constraints->@* if $self->constraints;
-
-    my $columns = join ",\n", @column_defintions;
+    my $columns = join ",\n", @column_definitions;
 
     return "CREATE TABLE IF NOT EXISTS " . $self->name . " (\n $columns\n);";
 }

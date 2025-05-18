@@ -91,6 +91,7 @@ sub _build_schema {
                         name        => "created_at",
                         type        => "timestamptz",
                         constraints => ["NOT NULL"],
+                        default     => "CURRENT_TIMESTAMP",
                     }),
                     Column->new({
                         name    => "updated_at",
