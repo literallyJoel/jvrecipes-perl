@@ -19,7 +19,6 @@ requires 'aliased';
 
 # Dev dependencies
 on 'develop' => sub {
-    requires 'Carton';  # Include Carton itself as a development dependency
-    requires 'Plack::App::Directory';  # For development server
-    requires 'Plack::Middleware::Refresh';  # For auto-reloading during development
+    requires 'Carton';
+    requires 'Plack::App::Directory';
 };
