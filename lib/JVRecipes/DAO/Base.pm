@@ -13,7 +13,7 @@ my $stored_schema;
 has table_name   => ( is => "ro", isa => "Str", required => 1 );
 has primary_key  => ( is => "ro", isa => "Str", lazy_build => 1 );
 has table_schema => ( is => "ro", isa => "Str", lazy_build => 1 );
-has columns      => ( is => "ro", isa => "ArrayRef[str]", lazy_build => 1 );
+has columns      => ( is => "ro", isa => "ArrayRef[Str]", lazy_build => 1 );
 
 sub select {
     my $self = shift;
