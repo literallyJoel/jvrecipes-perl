@@ -18,8 +18,8 @@ sub _build_query {
 
     my $query = $self->name . " " . $self->type;
     $query .= " NOT NULL"                            unless $self->nullable;
-    $query .= " DEFAULT ". $self->default            if $self->default;
     $query .= " PRIMARY KEY"                         if $self->primary_key;
+    $query .= " DEFAULT ". $self->default            if $self->default;
     $query .= " " . join " ", $self->constraints->@* if $self->constraints;
     return $query;
 }
