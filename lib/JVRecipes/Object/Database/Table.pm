@@ -26,7 +26,7 @@ sub _build_query {
 sub _build_primary_key {
     my $self = shift;
 
-    return [ grep { $_->primary_key } $self->columns ->@*];
+    return [grep {$_->primary_key} $self->columns->@*];
 }
 
 __PACKAGE__->meta->make_immutable;
