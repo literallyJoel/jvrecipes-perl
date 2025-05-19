@@ -151,7 +151,7 @@ sub _build_table_schema {
 
     my $schema = _get_schema;
 
-    my $table = $schema->table_map->{$self->table_name};
+    my $table = $schema->as_hashref->{$self->table_name};
 
     croak "No " . $self->table_name . " found in schema" unless $table;
 
