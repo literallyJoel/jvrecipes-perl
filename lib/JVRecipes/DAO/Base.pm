@@ -91,7 +91,7 @@ sub update {
 
     try {
         my $sth = $self->dbh->prepare($sql);
-        $sth->execute(@bind);
+        return $sth->execute(@bind)->rows;
     } catch {
         croak "DB UPDATE failed: $_";
     };
