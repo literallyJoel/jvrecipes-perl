@@ -21,9 +21,7 @@ sub _build_as_hashref {
     my $self = shift;
     my $tables = $self->tables;
 
-    my %table_map = map {$_->name => $_} @$tables;
-
-    return \%table_map;
+    return { map {$_->name => $_} @$tables };
 }
 
 __PACKAGE__->meta->make_immutable;
