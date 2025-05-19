@@ -9,7 +9,7 @@ has name        => ( is => "ro", isa => "Str", required => 1);
 has columns     => ( is => "ro", isa => "ArrayRef[JVRecipes::Object::Database::Column]", required => 1 );
 has constraints => ( is => "ro", isa => "ArrayRef[Str]" );
 has query       => ( is => "ro", isa => "Str", lazy_build => 1);
-has primary_key => ( is => "ro", isa => "Str", lazy_build => 1);
+has primary_keys => ( is => "ro", isa => "ArrayRef[Str]", lazy_build => 1);
 
 sub _build_query {
     my $self = shift;

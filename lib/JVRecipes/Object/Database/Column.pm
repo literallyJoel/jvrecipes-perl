@@ -8,7 +8,7 @@ class_type "JVRecipes::Object::Database::Column";
 has name        => ( is => "ro", isa => "Str", required => 1 );
 has type        => ( is => "ro", isa => "Str", required => 1 );
 has constraints => ( is => "ro", isa => "ArrayRef[Str]" );
-has primary_key => ( is => "ro", isa => "Int", default => 0 );
+has primary_key => ( is => "ro", isa => "Str", default => 0 );
 has nullable    => ( is => "ro", isa => "Bool" );
 has default     => ( is => "ro", isa => "Bool" );
 has query       => ( is => "ro", isa => "Str", lazy_build => 1 );
