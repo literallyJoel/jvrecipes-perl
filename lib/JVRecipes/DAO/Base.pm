@@ -10,9 +10,9 @@ use JSON::MaybeXS;
 
 my $stored_schema;
 
-has table_name   => ( is => "ro", isa => "Str", required => 1 );
-has primary_key  => ( is => "ro", isa => "Str", lazy_build => 1 );
-has table_schema => ( is => "ro", isa => "Str", lazy_build => 1 );
+has table_name   => ( is => "ro", isa => "Str");
+has primary_keys  => ( is => "ro", isa => "ArrayRef[Str]", lazy_build => 1 );
+has table_schema => ( is => "ro", isa => "JVRecipes::Object::Database::Table", lazy_build => 1 );
 has columns      => ( is => "ro", isa => "ArrayRef[Str]", lazy_build => 1 );
 
 sub select {
@@ -158,12 +158,12 @@ sub _build_table_schema {
     return $table;
 }
 
-sub _build_primary_key {
-    return shift->table_schema->primary_key;
+sub _build_primary_keys {
+   return shift->table_schema->primary_keys;
 }
 
 sub _build_columns {
-    return [map {$_->name} shift->table_schema->columns];
+    return [map {$_->name} shift->table_schema->columns->@*];
 }
 
 1;

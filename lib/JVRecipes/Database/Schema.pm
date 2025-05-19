@@ -16,7 +16,7 @@ sub generate {
     my $self = shift;
 
     my $query = $self->schema->query;
-    
+
     try {
         $self->dbh->do($query);
     } catch {

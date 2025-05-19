@@ -5,10 +5,10 @@ use Mouse::Util::TypeConstraints;
 
 class_type "JVRecipes::Object::Database::Table";
 
-has name        => ( is => "ro", isa => "Str", required => 1);
-has columns     => ( is => "ro", isa => "ArrayRef[JVRecipes::Object::Database::Column]", required => 1 );
-has constraints => ( is => "ro", isa => "ArrayRef[Str]" );
-has query       => ( is => "ro", isa => "Str", lazy_build => 1);
+has name         => ( is => "ro", isa => "Str", required => 1);
+has columns      => ( is => "ro", isa => "ArrayRef[JVRecipes::Object::Database::Column]", required => 1 );
+has constraints  => ( is => "ro", isa => "ArrayRef[Str]" );
+has query        => ( is => "ro", isa => "Str", lazy_build => 1);
 has primary_keys => ( is => "ro", isa => "ArrayRef[Str]", lazy_build => 1);
 
 sub _build_query {
@@ -23,10 +23,11 @@ sub _build_query {
     return "CREATE TABLE IF NOT EXISTS " . $self->name . " (\n $columns\n);";
 }
 
-sub _build_primary_key {
+sub _build_primary_keys {
     my $self = shift;
+    my @keys = grep {$_->primary_key} $self->columns->@*;
 
-    return [grep {$_->primary_key} $self->columns->@*];
+    return [map {$_->name} @keys];
 }
 
 __PACKAGE__->meta->make_immutable;
