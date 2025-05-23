@@ -125,7 +125,7 @@ sub execute {
         my $sth = $self->dbh->prepare($sql);
         return $sth->execute(@bind)->rows;
     } catch {
-        croak "DB EXECUTE failed: $_"
+        croak "DB EXECUTE failed: $_";
     };
 }
 
