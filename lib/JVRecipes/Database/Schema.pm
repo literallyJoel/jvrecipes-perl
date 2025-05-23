@@ -45,9 +45,12 @@ sub _build_schema {
                         nullable    => 1,
                     }),
                     Column->new({
-                        name     => "name",
+                        name     => "first_name",
                         type     => "varchar",
-                        nullable => 1,
+                    }),
+                    Column->new({
+                        name     => "last_name",
+                        type     => "varchar",
                     }),
                     Column->new({
                         name    => "created_at",

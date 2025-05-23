@@ -17,6 +17,7 @@ requires 'Exporter';
 requires 'Test2::Bundle::More';
 requires 'aliased';
 requires 'Crypt::Argon2';
+requires 'Crypt::URandom';
 
 # Dev dependencies
 on 'develop' => sub {
