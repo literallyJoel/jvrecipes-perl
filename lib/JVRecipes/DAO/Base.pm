@@ -142,7 +142,7 @@ sub _execute {
     my $context = shift;
     my @bind = @_;
 
-    die "Invalid context provided. Should be READ or WRITE." unless $context eq "READ" && $context eq "WRITE";
+    die "Invalid context provided. Should be READ or WRITE." unless $context eq "READ" || $context eq "WRITE";
 
     try {
         my $sth = $self->dbh->prepare($sql);

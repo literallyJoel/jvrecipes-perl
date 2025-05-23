@@ -4,7 +4,7 @@ use Mouse;
 with qw(
     JVRecipes::Role::DAO::User
     JVRecipes::Role::DAO::AuthIdentity
-    JVRecipes::Role::DAO::PasswordHashes
+    JVRecipes::Role::DAO::PasswordHash
 );
 
 use JVRecipes::User::Util;
@@ -32,7 +32,7 @@ sub create {
         email      => $email,
         first_name => $first_name,
         last_name  => $last_name,
-    )->[0];
+    );
 
     return (0, "user_insert_failed") unless $user_id;
 

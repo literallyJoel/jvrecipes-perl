@@ -24,11 +24,15 @@ sub get_by_email {
     my $self  = shift;
     my $email = shift;
 
-    return $self->user_dao->select(
+    return unless defined $email && $email =~ /\S+\@\S+/;
+
+    my $results = $self->user_dao->select(
         where => {
             email => $email
         }
-    )->[0];
+    );
+
+    return $results && @$results ? $results->[0] : undef;
 }
 
 1;
