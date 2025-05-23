@@ -105,7 +105,7 @@ sub delete {
 
     my $sql = "DELETE FROM " . $self->table_name;
 
-    my($where_sql, $where_bind) = $self->_buld_where($where);
+    my($where_sql, $where_bind) = $self->_build_where($where);
     $sql .= " $where_sql";
 
     try {
