@@ -10,12 +10,16 @@ use JSON::MaybeXS;
 
 my $stored_schema;
 
-has table_name   => ( is => "ro", isa => "Str");
+has table_name   => ( is => "ro", isa => "Str", builder => "table_name");
 has primary_keys  => ( is => "ro", isa => "ArrayRef[Str]", lazy_build => 1 );
 has table_schema => ( is => "ro", isa => "JVRecipes::Object::Database::Table", lazy_build => 1 );
 has columns      => ( is => "ro", isa => "ArrayRef[Str]", lazy_build => 1 );
 
 sub select {
+    return _select(@_);
+}
+
+sub _select {
     my $self = shift;
     my %args = @_;
 
@@ -43,15 +47,19 @@ sub select {
 }
 
 sub insert {
+    return _insert(@_);
+}
+
+sub _insert {
     my $self = shift;
-    my $obj  = shift;
+    my %obj  = @_;
 
     my @columns = $self->columns->@*;
-    my @insert_cols = grep { exists $obj->{$_} } @columns;
+    my @insert_cols = grep { exists $obj{$_} } @columns;
     croak "No valid columns to insert" unless @insert_cols;
 
     my @placeholders = map {"?"} @insert_cols;
-    my @bind = @{$obj}{@insert_cols};
+    my @bind = map {$obj{$_}} @insert_cols;
 
     my $sql = "INSERT INTO " . $self->table_name .
               " (" . join(", ", @insert_cols) . ") VALUES (" .
@@ -70,6 +78,10 @@ sub insert {
 }
 
 sub update {
+    return _update(@_);
+}
+
+sub _update {
     my $self = shift;
     my $obj  = shift;
     my $where = shift;
@@ -98,6 +110,10 @@ sub update {
 }
 
 sub delete {
+    _delete(@_);
+}
+
+sub _delete {
     my $self  = shift;
     my $where = shift;
 
@@ -117,15 +133,22 @@ sub delete {
 }
 
 sub execute {
-    my $self = shift;
-    my $sql  = shift;
+    _execute(@_);
+}
+
+sub _execute {
+    my $self    = shift;
+    my $sql     = shift;
+    my $context = shift;
     my @bind = @_;
+
+    die "Invalid context provided. Should be READ or WRITE." unless $context eq "READ" && $context eq "WRITE";
 
     try {
         my $sth = $self->dbh->prepare($sql);
         return $sth->execute(@bind)->rows;
     } catch {
-        croak "DB EXECUTE failed: $_";
+        croak "DB EXECUTE ($context) failed: $_";
     };
 }
 
