@@ -15,11 +15,11 @@ sub select {
     return $self->_select(%args)
         unless $self->with_password_hash;
 
-    my $sql = "SELECT " . join ", ", map {"u.$_"} $self->columns->@* . ", pw.hash as pw_hash";
-    $sql   .= " FROM " . $self->table_name . "u ";
+    my $sql = "SELECT " . join(", ", map {"u.$_"} $self->columns->@*) . ", pw.hash as pw_hash";
+    $sql   .= " FROM " . $self->table_name . " u ";
     $sql   .= qq{
-                JOIN auth_identites ai
-                  ON ai.user_id = u.user_id
+                JOIN auth_identities ai
+                  ON ai.user_id = u.id
                 JOIN password_hashes pw
                   ON pw.auth_identity_id = ai.id
               };
