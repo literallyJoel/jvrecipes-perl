@@ -35,7 +35,7 @@ sub _build_schema {
                     Column->new({
                         name        => "id",
                         type        => "uuid",
-                        constraints => ["PRIMARY KEY"],
+                        primary_key => 1,
                         default     => "gen_random_uuid()",
                     }),
                     Column->new({
@@ -67,7 +67,7 @@ sub _build_schema {
                     Column->new({
                         name        => "id",
                         type        => "uuid",
-                        constraints => ["PRIMARY KEY"],
+                        primary_key => 1,
                         default     => "gen_random_uuid()",
                     }),
                     Column->new({
@@ -107,7 +107,7 @@ sub _build_schema {
                     Column->new({
                         name        => "id",
                         type        => "uuid",
-                        constraints => ["PRIMARY KEY"],
+                        primary_key => 1,
                         default     => "gen_random_uuid()",
                     }),
                     Column->new({
