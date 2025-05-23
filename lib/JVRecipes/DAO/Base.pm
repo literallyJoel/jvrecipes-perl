@@ -55,7 +55,7 @@ sub insert {
 
     my $sql = "INSERT INTO " . $self->table_name .
               " (" . join(", ", @insert_cols) . ") VALUES (" .
-              join(", ", @placeholders) . ") RETURNING " . join ",", $self->primary_keys->@*;
+              join(", ", @placeholders) . ") RETURNING " . join ", ", $self->primary_keys->@*;
 
     my $last_id;
     try {
