@@ -116,6 +116,19 @@ sub delete {
     };
 }
 
+sub execute {
+    my $self = shift;
+    my $sql  = shift;
+    my @bind = @_;
+
+    try {
+        my $sth = $self->dbh->prepare($sql);
+        return $sth->execute(@bind)->rows;
+    } catch {
+        croak "DB EXECUTE failed: $_"
+    };
+}
+
 sub _build_where {
     my $self  = shift;
     my $where = shift || {};
