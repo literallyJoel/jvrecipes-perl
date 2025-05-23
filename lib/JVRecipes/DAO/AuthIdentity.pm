@@ -1,4 +1,4 @@
-package JVRecipes::DAO::User;
+package JVRecipes::DAO::AuthIdentity;
 
 use Mouse;
 extends "JVRecipes::DAO::Base";
