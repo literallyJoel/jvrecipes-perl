@@ -55,7 +55,7 @@ sub insert {
 
     my $sql = "INSERT INTO " . $self->table_name .
               " (" . join(", ", @insert_cols) . ") VALUES (" .
-              join(", ", @placeholders) . ") RETURNING " . $self->primary_key;
+              join(", ", @placeholders) . ") RETURNING " . join ",", $self->primary_keys->@*;
 
     my $last_id;
     try {
@@ -94,6 +94,25 @@ sub update {
         return $sth->execute(@bind)->rows;
     } catch {
         croak "DB UPDATE failed: $_";
+    };
+}
+
+sub delete {
+    my $self  = shift;
+    my $where = shift;
+
+    croak "Delete requires WHERE clause" unless $where && %$where;
+
+    my $sql = "DELETE FROM " . $self->table_name;
+
+    my($where_sql, $where_bind) = $self->_buld_where($where);
+    $sql .= " $where_sql";
+
+    try {
+        my $sth = $self->dbh->prepare($sql);
+        return $sth->execute(@$where_bind)->rows;
+    } catch {
+        croak "DB DELETE failed: $_";
     };
 }
 
