@@ -9,11 +9,15 @@ sub get_by_id {
     my $self = shift;
     my $id   = shift;
 
-    return $self->user_dao->select(
+    return unless defined $id && $id =~ /^\d+$/;
+
+    my $results = $self->user_dao->select(
         where => {
             id => $id
         }
-    )->[0];
+    );
+
+    return $results && @$results ? $results->[0] : undef;
 }
 
 sub get_by_email {
